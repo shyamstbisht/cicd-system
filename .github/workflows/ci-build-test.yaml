@@ -23,9 +23,6 @@ jobs:
       - name: list the project files
         run: ls -la  
 
-      - name: Does nothing
-        run: echo "Hello world"
-
       - name: Build Docker Image
         run: docker build -t cicd-prod .
 
