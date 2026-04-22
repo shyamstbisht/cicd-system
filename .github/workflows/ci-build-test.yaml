@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: list the project files
-        uses: ls -la  
+        run: ls -la  
 
       - name: Build Docker Image
         run: docker build -t cicd-prod .
