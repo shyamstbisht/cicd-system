@@ -19,13 +19,16 @@ jobs:
     steps:
       - name: checkout code
         uses: actions/checkout@v4
-    
+
+      - name: list the project files
+        uses: ls -la  
+
       - name: Build Docker Image
         run: docker build -t cicd-prod .
-      
+
       - name: Run Container
         run: docker run -d -p 5000:5000 --name prod-container cicd-prod
-      
+
       - name: Wait for app
         run: |
           for i in {1..10}; do
