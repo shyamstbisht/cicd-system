@@ -23,7 +23,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: List project files
-      uses: echo "ls -la"
+      run: ls -la
     
     - name: Build image
       run: docker build -t deploy-pipeline .
