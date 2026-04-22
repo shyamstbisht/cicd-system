@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return f"Api__key: {os.getenv('API_KEY')}"
+    return "Application running with secrets managements."
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
