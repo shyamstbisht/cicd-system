@@ -19,37 +19,37 @@ jobs:
       API_KEY: ${{ secrets.API_KEY }}
 
     steps:
-      - name: Git checkout
-        uses: actions/checkout@v4
+    - name: Git checkout
+      uses: actions/checkout@v4
 
-      - name: List project files
-        run: ls -la
-      
-      - name: Build image
-        run: docker build -t deploy-pipeline .
+    - name: List project files
+      run: echo ls -la
+    
+    - name: Build image
+      run: docker build -t deploy-pipeline .
 
-      - name: Run container
-        run: docker run -d -p 5000:5000 -e API_KEY=${API_KEY} --name prod-deploy-con deploy-pipeline
+    - name: Run container
+      run: docker run -d -p 5000:5000 -e API_KEY=${API_KEY} --name prod-deploy-con deploy-pipeline
 
-      - name: Wait for app
-        run: |
-          for i in {1..10}; do
-            if curl -s http://localhost:5000; then
-              echo "App is running"
-              exit 0
-            fi
-              echo "Waiting for app"
-              sleep 2
-          done
+    - name: Wait for app
+      run: |
+        for i in {1..10}; do
+          if curl -s http://localhost:5000; then
+            echo "App is running"
+            exit 0
+          fi
+            echo "Waiting for app"
+            sleep 2
+        done
 
-          echo "app is not working"
-          exit 1
-      
-      - name: logs
-        run: docker logs prod-deploy-con
+        echo "app is not working"
+        exit 1
+    
+    - name: logs
+      run: docker logs prod-deploy-con
 
-      - name: Check app isRunning
-        run: curl -f http://localhost:5000
-      
-      - name: Deployment success message
-        run: echo "Deployment successful"
+    - name: Check app isRunning
+      run: curl -f http://localhost:5000
+    
+    - name: Deployment success message
+      run: echo "Deployment successful"
