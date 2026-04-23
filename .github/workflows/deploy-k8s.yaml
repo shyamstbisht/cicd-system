@@ -27,12 +27,12 @@ jobs:
       run: ls -la
     
     - name: Login to Docker hub
-      run: echo "${{ DOCKER_TOKEN }}" | docker login -u "${{ DOCKER_USERNAME }}" --password-stdin
+      run: echo $DOCKER_TOKEN | docker login -u $DOCKER_USERNAME --password-stdin
 
     - name: Build image and Push
       run: |
-        docker build -t ${{ DOCKER_USERNAME }}/deploy-pipeline .
-        docker push ${{ DOCKER_USERNAME }}/deploy-pipeline:latest
+        docker build -t $DOCKER_USERNAME/deploy-pipeline .
+        docker push $DOCKER_USERNAME/deploy-pipeline:latest
   
   deploy:
     runs-on: self-hosted
@@ -45,7 +45,7 @@ jobs:
     - name: setup kube config
       run: |
         mkdir -p ~/.kube
-        echo "${{ KUBE_CONFIG }}" > ~/.kube/config
+        echo $KUBE_CONFIG" > ~/.kube/config
         chmod 600 ~/.kube/config
 
     - name: Deploy to k8s
