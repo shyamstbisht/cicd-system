@@ -45,7 +45,7 @@ jobs:
     - name: setup kube config
       run: |
         mkdir -p ~/.kube
-        echo $KUBE_CONFIG" > ~/.kube/config
+        echo $KUBE_CONFIG > ~/.kube/config
         chmod 600 ~/.kube/config
 
     - name: Deploy to k8s
