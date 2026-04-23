@@ -18,3 +18,14 @@ jobs:
     steps:
     - name: Git Checkout
       uses: actions/checkout@v4
+
+    - name: List project files
+      run: ls -la
+    
+    - name: Docker login
+      run: echo ${{ secrets.DOCKER_TOKEN }} | docker login -u ${{ DOCKER_USERNAME }} --password-stdin
+
+    - name: Build docker image and push
+      run: |
+        docker build -t ${{ DOCKER_USERNAME }}/deploy-practice-1:${{ github.sha }} .
+        docker push ${{ DOCKER_USERNAME }}/deploy-practice-1:${{ github.sha }}
