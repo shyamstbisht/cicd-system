@@ -3,7 +3,7 @@ name: Deploy pipeline
 on: 
   push:
     paths:
-      - '04-deploy-success-but-app-down/**'
+      - '05-k8s-deployment/**'
     branches:
       - dev
 
@@ -13,7 +13,7 @@ jobs:
   
     defaults:
       run:
-        working-directory: '04-deploy-success-but-app-down'
+        working-directory: '05-k8s-deployment'
 
     env:
       DOCKER_USERNAME: ${{ vars.DOCKER_USERNAME }}
