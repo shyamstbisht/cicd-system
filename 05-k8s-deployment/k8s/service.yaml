@@ -4,9 +4,10 @@ metadata:
   app: prod-app
   namespace: dev
 spec:
-  type: NodePort
   selector:
     app: prod-app
-  port: 5000
-  targetPort: 5000
-  nodePort: 30007
+  type: NodePort
+  ports:
+  - port: 5000
+    targetPort: 5000
+    nodePort: 30007
