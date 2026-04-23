@@ -36,7 +36,7 @@ jobs:
 
     - name: Build image and Push
       run: |
-        docker build -t $DOCKER_USERNAME/deploy-pipeline:${{ github.sha }} \
+        docker build -t $DOCKER_USERNAME/deploy-pipeline:${{ github.sha }} .
         docker push $DOCKER_USERNAME/deploy-pipeline:${{ github.sha }}
   
   deploy:
