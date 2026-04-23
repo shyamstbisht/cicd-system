@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  app: prod-app
+  name: prod-app-service
   namespace: dev
 spec:
   selector:
