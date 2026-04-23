@@ -1,0 +1,61 @@
+name: Deploy pipeline
+
+on: 
+  push:
+    paths:
+      - '04-deploy-success-but-app-down/**'
+    branches:
+      - dev
+
+jobs:
+  build-pipeline:
+    runs-on: self-hosted
+  
+    defaults:
+      run:
+        working-directory: '04-deploy-success-but-app-down'
+
+    env:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+
+    steps:
+    - name: Git checkout
+      uses: actions/checkout@v4
+
+    - name: List project files
+      run: ls -la
+    
+    - name: Login to Docker hub
+      run: echo "${{ DOCKER_TOKEN }}" | docker login -u "${{ DOCKER_USERNAME }}" --password-stdin
+
+    - name: Build image and Push
+      run: |
+        docker build -t ${{ DOCKER_USERNAME }}/deploy-pipeline .
+        docker push ${{ DOCKER_USERNAME }}/deploy-pipeline:latest
+  
+  deploy:
+    runs-on: self-hosted
+    needs: build-pipeline
+
+    env: 
+      KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+
+    steps:
+    - name: setup kube config
+      run: |
+        mkdir -p ~/.kube
+        echo "${{ KUBE_CONFIG }}" > ~/.kube/config
+        chmod 600 ~/.kube/config
+
+    - name: Deploy to k8s
+      run: |
+        kubectl apply -f k8s/deployment.yaml
+        kubectl apply -f k8s/service.yaml
+    
+    - name: Wait for Deployment
+      run: kubectl status rollout deployment/prod-app
+
+    - name: Clean up kube config
+      if: always()
+      run: rm -rf ~/.kube/config

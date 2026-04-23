@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prod-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: prod-app
+  template:
+    metadata:
+      lables:
+        app: prod-app
+    spec:
+      containers:
+      - name: prod-app
+        image: shavbb/deploy-pipeline
+        ports:
+        - containerPort: 5000
+        imagePullPolicy: IfNotPresent
+      
