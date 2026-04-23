@@ -42,10 +42,13 @@ jobs:
       KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
 
     steps:
+    - name: Git checkout
+      uses: actions/checkout@v4
+
     - name: setup kube config
       run: |
         mkdir -p ~/.kube
-        echo $KUBE_CONFIG > ~/.kube/config
+        echo "$KUBE_CONFIG" > ~/.kube/config
         chmod 600 ~/.kube/config
 
     - name: Deploy to k8s
@@ -54,7 +57,7 @@ jobs:
         kubectl apply -f k8s/service.yaml
     
     - name: Wait for Deployment
-      run: kubectl status rollout deployment/prod-app
+      run: kubectl rollout status deployment/prod-app
 
     - name: Clean up kube config
       if: always()
