@@ -29,3 +29,30 @@ jobs:
       run: |
         docker build -t ${{ vars.DOCKER_USERNAME }}/deploy-practice-1:${{ github.sha }} .
         docker push ${{ vars.DOCKER_USERNAME }}/deploy-practice-1:${{ github.sha }}
+
+  deploy:
+    runs-on: self-hosted
+    needs: build
+
+    defaults:
+      run:
+        working-directory: practice1
+    
+    steps:
+    - name: setup kube config
+      run: |
+        mkdir -p ~/.kube
+        echo ${{ secrets.KUBE_CONFIG }} > ~/.kube/config
+        chmod 600 ~/.kube/config
+    
+    - name: Deploy K8s manifest files
+      run: |
+        kubectl apply -f k8s/deployment.yaml --namespace dev
+        kubectl apply -f k8s/service.yaml --namespace dev
+
+    - name: Check K8s deployment status
+      run: kubectl rollout status deploy-practice-1 --namespace dev
+
+    - name: Validate deployment
+      run: curl --fail http://localhost:30010
+

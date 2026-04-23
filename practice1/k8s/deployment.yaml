@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-practice-1
+  namespace: dev
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: prod-app
+  template:
+    metadata:
+      labels:
+        app: prod-app
+    spec:
+      containers:
+      - name: deploy-practice-1
+        image: shavbb/deploy-practice-1
+        ports:
+        - containerPort: 5000
