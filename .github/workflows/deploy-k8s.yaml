@@ -6,6 +6,7 @@ on:
       - '05-k8s-deployment/**'
     branches:
       - dev
+      - main
 
 jobs:
   build-pipeline:
