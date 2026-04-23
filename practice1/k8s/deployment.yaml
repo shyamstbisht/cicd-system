@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: deploy-practice-1
-        image: shavbb/deploy-practice-1
+        image: shavbb/deploy-practice-1:latest
         ports:
         - containerPort: 5000
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
