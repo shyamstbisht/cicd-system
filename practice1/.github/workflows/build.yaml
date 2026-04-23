@@ -1,0 +1,20 @@
+name: Build CICD
+
+on:
+  push:
+    paths:
+      - 'practice1/**'
+    branches:
+      - dev
+
+jobs:
+  build:
+    runs-on: self-hosted
+  
+  defaults:
+    run:
+      working-directory: practice1
+
+  steps:
+  - name: Git Checkout
+    uses: actions/checkout@v4
