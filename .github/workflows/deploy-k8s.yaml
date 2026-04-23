@@ -83,8 +83,8 @@ jobs:
     - name: Verify the deployment endpoint
       run: |
         for i in {1..10}; do
-          echo '$i'
-          curl http://localhost:3000 && exit 0
+          echo "$i"
+          curl http://localhost:30007 && exit 0
           sleep 5
         done
 
