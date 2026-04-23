@@ -31,7 +31,7 @@ jobs:
 
     - name: Build image and Push
       run: |
-        docker build -t $DOCKER_USERNAME/deploy-pipeline:${{ github.sha }} .
+        docker build -t $DOCKER_USERNAME/deploy-pipeline:${{ github.sha }} \
                      -t $DOCMER_USERNAME/deploy-pipeline:latest .
         docker push $DOCKER_USERNAME/deploy-pipeline:${{ github.sha }}
         docker push $DOKCER_USERNAME/deploy-pipeline:latest
@@ -43,7 +43,7 @@ jobs:
     defaults:
       run:
         working-directory: '05-k8s-deployment'
-        
+
     env: 
       KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
 
