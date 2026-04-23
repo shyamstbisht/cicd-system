@@ -31,13 +31,19 @@ jobs:
 
     - name: Build image and Push
       run: |
-        docker build -t $DOCKER_USERNAME/deploy-pipeline .
-        docker push $DOCKER_USERNAME/deploy-pipeline:latest
+        docker build -t $DOCKER_USERNAME/deploy-pipeline:${{ github.sha }} .
+                     -t $DOCMER_USERNAME/deploy-pipeline:latest .
+        docker push $DOCKER_USERNAME/deploy-pipeline:${{ github.sha }}
+        docker push $DOKCER_USERNAME/deploy-pipeline:latest
   
   deploy:
     runs-on: self-hosted
     needs: build-pipeline
 
+    defaults:
+      run:
+        working-directory: '05-k8s-deployment'
+        
     env: 
       KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
 
@@ -53,12 +59,12 @@ jobs:
 
     - name: Deploy to k8s
       run: |
-        kubectl apply -f k8s/deployment.yaml
-        kubectl apply -f k8s/service.yaml
+        kubectl apply -f k8s/deployment.yaml --namespace dev
+        kubectl apply -f k8s/service.yaml --namespace dev
     
     - name: Wait for Deployment
       run: kubectl rollout status deployment/prod-app
 
     - name: Clean up kube config
       if: always()
-      run: rm -rf ~/.kube/config
+      run: rm -f ~/.kube/config
