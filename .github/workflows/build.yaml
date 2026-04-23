@@ -41,11 +41,11 @@ jobs:
     steps:
     - name: Git checkout
       uses: actions/checkout@v4
-      
+
     - name: setup kube config
       run: |
         mkdir -p ~/.kube
-        echo ${{ secrets.KUBE_CONFIG }} > ~/.kube/config
+        echo "${{ secrets.KUBE_CONFIG }}" > ~/.kube/config
         chmod 600 ~/.kube/config
     
     - name: Deploy K8s manifest files
@@ -54,7 +54,7 @@ jobs:
         kubectl apply -f k8s/service.yaml --namespace dev
 
     - name: Check K8s deployment status
-      run: kubectl rollout status deploy-practice-1 --namespace dev
+      run: kubectl rollout status deployment/deploy-practice-1 --namespace dev
 
     - name: Validate deployment
       run: curl --fail http://localhost:30010
