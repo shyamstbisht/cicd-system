@@ -16,7 +16,7 @@ jobs:
         working-directory: '04-deploy-success-but-app-down'
 
     env:
-      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_USERNAME: ${{ vars.DOCKER_USERNAME }}
       DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
 
     steps:
