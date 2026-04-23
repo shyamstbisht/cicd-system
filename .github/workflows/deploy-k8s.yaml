@@ -37,9 +37,7 @@ jobs:
     - name: Build image and Push
       run: |
         docker build -t $DOCKER_USERNAME/deploy-pipeline:${{ github.sha }} \
-                     -t $DOCKER_USERNAME/deploy-pipeline:latest .
         docker push $DOCKER_USERNAME/deploy-pipeline:${{ github.sha }}
-        docker push $DOKCER_USERNAME/deploy-pipeline:latest
   
   deploy:
     runs-on: self-hosted
