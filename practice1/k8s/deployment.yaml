@@ -14,8 +14,8 @@ spec:
         app: prod-app
     spec:
       containers:
-      - name: deploy-practice-1
-        image: shavbb/deploy-practice-1:latest
+      - name: deploy-practice-2
+        image: shavbb/deploy-practice-2:latest
         ports:
         - containerPort: 5000
         imagePullPolicy: Always
