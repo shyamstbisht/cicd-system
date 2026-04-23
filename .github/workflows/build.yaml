@@ -39,6 +39,9 @@ jobs:
         working-directory: practice1
     
     steps:
+    - name: Git checkout
+      uses: actions/checkout@v4
+      
     - name: setup kube config
       run: |
         mkdir -p ~/.kube
