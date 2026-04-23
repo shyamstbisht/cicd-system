@@ -27,8 +27,10 @@ jobs:
 
     - name: Build docker image and push
       run: |
-        docker build -t ${{ vars.DOCKER_USERNAME }}/deploy-practice-1:${{ github.sha }} .
+        docker build -t ${{ vars.DOCKER_USERNAME }}/deploy-practice-1:${{ github.sha }} \
+                     -t ${{ vars.DOCKER_USERNAME }}/deploy-practice-1 .
         docker push ${{ vars.DOCKER_USERNAME }}/deploy-practice-1:${{ github.sha }}
+        docker push ${{ vars.DOCKER_USERNAME }}/deploy-practice-1:latest
 
   deploy:
     runs-on: self-hosted
