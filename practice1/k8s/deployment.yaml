@@ -18,3 +18,4 @@ spec:
         image: shavbb/deploy-practice-1
         ports:
         - containerPort: 5000
+        imagePullPolicy: IfNotPresent
