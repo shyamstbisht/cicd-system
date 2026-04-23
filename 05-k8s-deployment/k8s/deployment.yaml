@@ -9,7 +9,7 @@ spec:
       app: prod-app
   template:
     metadata:
-      lables:
+      labels:
         app: prod-app
     spec:
       containers:
