@@ -26,6 +26,11 @@ jobs:
     - name: List project files
       run: ls -la
     
+    - name: Debug
+      run: |
+        echo "Username: $DOCKER_USERNAME"
+        echo "Image: $DOCKER_USERNAME/deploy-pipeline"
+
     - name: Login to Docker hub
       run: echo $DOCKER_TOKEN | docker login -u $DOCKER_USERNAME --password-stdin
 
